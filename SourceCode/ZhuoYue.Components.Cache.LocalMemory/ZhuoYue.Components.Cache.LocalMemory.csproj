@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ZhuoYue.Components.Cache.Abstractions\ZhuoYue.Components.Cache.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>
