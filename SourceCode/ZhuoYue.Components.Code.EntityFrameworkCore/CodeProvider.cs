@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using ZhuoYue.Components.Code.Abstractions;
@@ -19,117 +20,148 @@ namespace ZhuoYue.Components.Code.EntityFrameworkCore
 
         public CodeCategory CreateCodeCategory(CodeCategory codeCategory)
         {
-            var rt = new CodeCategoryEntity()
-            {
-                AppId = codeCategory.AppId,
-                CategoryId = Guid.NewGuid().ToString(),
-                CategoryName = codeCategory.CategoryName,
-                CreatedTime = DateTime.Now,
-                CreatedUserId = codeCategory.CreatedUserId,
-                Remarks = codeCategory.Remarks
-            };
-            var items = new List<CodeItemEntity>(codeCategory.CodeItems.Count);
-
+            codeCategory.CategoryId = Guid.NewGuid().ToString();
             codeCategory.CodeItems.ForEach(it =>
             {
-                items.Add(new CodeItemEntity()
-                {
-                    CodeCategoryId = it.CodeCategoryId,
-                    CodeId = Guid.NewGuid().ToString(),
-                    CodeName = it.CodeName,
-                    CodeValue = it.CodeValue,
-                    CreatedTime = DateTime.Now,
-                    CreatedUserId = it.CreatedUserId,
-                    Remarks = it.Remarks,
-                    Sequence = it.Sequence
-                });
+                it.CodeCategoryId = codeCategory.CategoryId;
+                it.CodeId = Guid.NewGuid().ToString();
             });
-            rt.CodeItems.AddRange(items);
             using (DbContext.Database.BeginTransaction())
             {
-                var entity = DbContext.CodeCategories.Add(rt);
-                DbContext.CodeItems.AddRange(items);
+                var entity = DbContext.CodeCategories.Add(codeCategory);
+                DbContext.CodeItems.AddRange(codeCategory.CodeItems);
                 DbContext.SaveChanges();
-                rt.CategoryId = entity.Entity.CategoryId;
+                DbContext.Database.CommitTransaction();
+                return entity.Entity;
             }
-            return rt;
         }
 
         public IEnumerable<CodeCategory> CreateCodeCategory(IEnumerable<CodeCategory> codeCategories)
         {
-            throw new NotImplementedException();
+            codeCategories.ForEach(codeCategory =>
+            {
+                codeCategory.CategoryId = Guid.NewGuid().ToString();
+                codeCategory.CodeItems.ForEach(it =>
+                {
+                    it.CodeCategoryId = codeCategory.CategoryId;
+                    it.CodeId = Guid.NewGuid().ToString();
+                });
+            });
+            using (DbContext.Database.BeginTransaction())
+            {
+                DbContext.CodeCategories.AddRange(codeCategories);
+                codeCategories.ForEach(it =>
+                {
+                    DbContext.CodeItems.AddRange(it.CodeItems);
+                });
+                DbContext.SaveChanges();
+                DbContext.Database.CommitTransaction();
+                return codeCategories;
+            }
         }
 
         public CodeItem CreateCodeItem(CodeItem codeItem)
         {
-            var rt = new CodeItemEntity()
-            {
-                CodeCategoryId = codeItem.CodeCategoryId,
-                CodeId = Guid.NewGuid().ToString(),
-                CodeName = codeItem.CodeName,
-                CodeValue = codeItem.CodeValue,
-                CreatedTime = DateTime.Now,
-                CreatedUserId = codeItem.CreatedUserId,
-                Remarks = codeItem.Remarks,
-                Sequence = codeItem.Sequence
-            };
-            DbContext.CodeItems.Add(rt);
+            codeItem.CodeId = Guid.NewGuid().ToString();
+            var entity = DbContext.CodeItems.Add(codeItem);
             DbContext.SaveChanges();
-            return rt;
+            return entity.Entity;
         }
 
         public IEnumerable<CodeItem> CreateCodeItem(IEnumerable<CodeItem> codeItems)
         {
-            var rt = new List<CodeItemEntity>(codeItems.Count());
             codeItems.ForEach(it =>
             {
-                rt.Add(new CodeItemEntity()
-                {
-                    CodeCategoryId = it.CodeCategoryId,
-                    CodeId = Guid.NewGuid().ToString(),
-                    CodeName = it.CodeName,
-                    CodeValue = it.CodeValue,
-                    CreatedTime = DateTime.Now,
-                    CreatedUserId = it.CreatedUserId,
-                    Remarks = it.Remarks,
-                    Sequence = it.Sequence
-                });
+                it.CodeId = Guid.NewGuid().ToString();
 
             });
-            DbContext.CodeItems.AddRange(rt);
+            DbContext.CodeItems.AddRange(codeItems);
             DbContext.SaveChanges();
-            return rt;
+            return codeItems;
         }
 
         public CodeCategory DeleteCodeCategory(CodeCategory codeCategory)
         {
-            throw new NotImplementedException();
+            var codeItems = DbContext.CodeItems.Where(it => it.CodeCategoryId == codeCategory.CategoryId);
+            var category = DbContext.CodeCategories.Find(codeCategory.CategoryId);
+            using (DbContext.Database.BeginTransaction())
+            {
+                DbContext.CodeItems.RemoveRange(codeItems);
+                DbContext.CodeCategories.Remove(category);
+                DbContext.SaveChanges();
+                DbContext.Database.CommitTransaction();
+            }
+            category.CodeItems.AddRange(codeItems);
+            return category;
+
         }
 
         public IEnumerable<CodeCategory> DeleteCodeCategory(IEnumerable<CodeCategory> codeCategories)
         {
-            throw new NotImplementedException();
+            var searchCriteria = new SearchCriteria() { PageSize = null };
+            searchCriteria.CategoryIds.AddRange(codeCategories.Select(it => it.CategoryId).Distinct());
+            var rt = ReadCodeCategory(searchCriteria);
+            using (DbContext.Database.BeginTransaction())
+            {
+                DbContext.CodeItems.RemoveRange(rt.SelectMany(it => it.CodeItems));
+                DbContext.CodeCategories.RemoveRange(rt);
+                DbContext.SaveChanges();
+                DbContext.Database.CommitTransaction();
+            }
+            return rt;
         }
 
         public CodeItem DeleteCodeItem(CodeItem codeItem)
         {
-            throw new NotImplementedException();
+            var entity = DbContext.CodeItems.Find(codeItem.CodeId);
+            DbContext.CodeItems.Remove(entity);
+            DbContext.SaveChanges();
+            return entity;
         }
 
         public IEnumerable<CodeItem> DeleteCodeItem(IEnumerable<CodeItem> codeItems)
         {
-            throw new NotImplementedException();
+            var codeIds = codeItems.Select(it => it.CodeId);
+            codeItems = DbContext.CodeItems.Where(it => codeIds.Contains(it.CodeId));
+            DbContext.CodeItems.RemoveRange(codeItems);
+            DbContext.SaveChanges();
+            return codeItems;
         }
 
-        public IEnumerable<CodeCategory> ReadCodeCategory(CodeCategorySearchCriteria searchCriteria)
+        public IEnumerable<CodeCategory> ReadCodeCategory(SearchCriteria searchCriteria)
         {
-            throw new NotImplementedException();
+            IQueryable<CodeCategory> queryable = DbContext.CodeCategories;
+            if (searchCriteria.AppIds.Any())
+            {
+                queryable = queryable.Where(it => searchCriteria.AppIds.Contains(it.AppId));
+            }
+            if (searchCriteria.CategoryIds.Any())
+            {
+                queryable = queryable.Where(it => searchCriteria.CategoryIds.Contains(it.CategoryId));
+            }
+            if (searchCriteria.CategoryNames.Any())
+            {
+                queryable = queryable.Where(it => searchCriteria.CategoryNames.Contains(it.CategoryName));
+            }
+            if (searchCriteria.OrderBy.Any())
+                queryable = queryable.OrderBy(searchCriteria.OrderBy).AsQueryable();
+
+            //GroupJoin cannot work here, instead of Join
+            var a = queryable.Join(DbContext.CodeItems, it => it.CategoryId, it => it.CodeCategoryId, (l, r) => new { Category = l, Item = r });
+            if (searchCriteria.PageSize.HasValue && searchCriteria.PageSize != int.MaxValue)
+            {
+                if (searchCriteria.PageIndex > 0)
+                {
+                    a = a.Skip(searchCriteria.PageSize.Value * searchCriteria.PageIndex).Take(searchCriteria.PageSize.Value);
+                }
+                else
+                {
+                    a = a.Take(searchCriteria.PageSize.Value);
+                }
+            }
+            return a.ToList().ToLookup(it => it.Category).Select(it => it.Key); ;
         }
 
-        public IEnumerable<CodeItem> ReadCodeItem(CodeItemSearchCriteria codeItemSearchCriteria)
-        {
-            throw new NotImplementedException();
-        }
 
         public CodeCategory UpdateCodeCategory(CodeCategory codeCategory)
         {

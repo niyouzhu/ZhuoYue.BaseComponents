@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ZhuoYue.Components.Application.Abstractions\ZhuoYue.Components.Application.Abstractions.csproj" />
+    <ProjectReference Include="..\ZhuoYue.Components.Application.Cache\ZhuoYue.Components.Application.Cache.csproj" />
+    <ProjectReference Include="..\ZhuoYue.Components.Application.EntityFrameworkCore.SqlServer\ZhuoYue.Components.Application.EntityFrameworkCore.SqlServer.csproj" />
+    <ProjectReference Include="..\ZhuoYue.Components.Application.EntityFrameworkCore\ZhuoYue.Components.Application.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\ZhuoYue.Components.Application\ZhuoYue.Components.Application.csproj" />
+    <ProjectReference Include="..\ZhuoYue.Components.Cache.Abstractions\ZhuoYue.Components.Cache.Abstractions.csproj" />
+    <ProjectReference Include="..\ZhuoYue.Components.Cache.LocalMemory\ZhuoYue.Components.Cache.LocalMemory.csproj" />
+    <ProjectReference Include="..\ZhuoYue.Components.Cache\ZhuoYue.Components.Cache.csproj" />
+    <ProjectReference Include="..\ZhuoYue.Components.Code.Abstractions\ZhuoYue.Components.Code.Abstractions.csproj" />
+    <ProjectReference Include="..\ZhuoYue.Components.Code.EntityFrameworkCore.SqlServer\ZhuoYue.Components.Code.EntityFrameworkCore.SqlServer.csproj" />
+    <ProjectReference Include="..\ZhuoYue.Components.Code.EntityFrameworkCore\ZhuoYue.Components.Code.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\ZhuoYue.Components.Code\ZhuoYue.Components.Code.csproj" />
+    <ProjectReference Include="..\ZhuoYue.Components.Core\ZhuoYue.Components.Core.csproj" />
+  </ItemGroup>
+
+</Project>

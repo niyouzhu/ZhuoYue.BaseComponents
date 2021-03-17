@@ -8,5 +8,7 @@ namespace ZhuoYue.Components.Core
     {
 
         public const string App = "App";
+
+        public const string Code = "Code";
     }
 }

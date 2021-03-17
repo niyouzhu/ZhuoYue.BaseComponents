@@ -8,13 +8,15 @@ namespace ZhuoYue.Components.Code.Abstractions
     {
         ICodeProvider CodeProvider { get; }
 
+        IEnumerable<AppCode> ReadAll();
+
         AppCode ReadAll(string appId);
 
         CodeCategory CreateCodeCategory(CodeCategory codeCategory);
 
         IEnumerable<CodeCategory> CreateCodeCategory(IEnumerable<CodeCategory> codeCategories);
 
-        IEnumerable<CodeCategory> ReadCodeCategory(CodeCategorySearchCriteria searchCriteria);
+        IEnumerable<CodeCategory> ReadCodeCategory(SearchCriteria searchCriteria);
 
         CodeCategory UpdateCodeCategory(CodeCategory codeCategory);
 
@@ -26,7 +28,6 @@ namespace ZhuoYue.Components.Code.Abstractions
         CodeItem CreateCodeItem(CodeItem codeItem);
         IEnumerable<CodeItem> CreateCodeItem(IEnumerable<CodeItem> codeItems);
 
-        IEnumerable<CodeItem> ReadCodeItem(CodeItemSearchCriteria codeItemSearchCriteria);
         CodeItem UpdateCodeItem(CodeItem codeItem);
         IEnumerable<CodeItem> UpdateCodeItem(IEnumerable<CodeItem> codeItems);
         CodeItem DeleteCodeItem(CodeItem codeItem);

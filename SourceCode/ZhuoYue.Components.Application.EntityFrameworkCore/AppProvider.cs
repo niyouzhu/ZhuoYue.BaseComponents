@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace ZhuoYue.Components.Application.EntityFrameworkCore
         public string ProviderName { get; set; } = "AppProvider.EntityFrameworkCore";
         public App Create(App app)
         {
-            var rt = new AppEntity() { AppId = Guid.NewGuid().ToString(), AppName = app.AppName, AppRemarks = app.AppRemarks, CreatedTime = DateTime.Now, CreatedUserId = app.CreatedUserId };
+            var rt = new AppEntity() { AppId = Guid.NewGuid().ToString(), AppName = app.AppName, AppRemarks = app.AppRemarks, CreatedUserId = app.CreatedUserId };
             DbContext.Apps.Add(rt);
             DbContext.SaveChanges();
             return rt;
@@ -26,7 +27,7 @@ namespace ZhuoYue.Components.Application.EntityFrameworkCore
         public IEnumerable<App> Create(IEnumerable<App> apps)
         {
             var rt = new List<AppEntity>(apps.Count());
-            apps.ForEach(it => { rt.Add(new AppEntity() { AppId = Guid.NewGuid().ToString(), AppName = it.AppName, AppRemarks = it.AppRemarks, CreatedTime = DateTime.Now, CreatedUserId = it.CreatedUserId }); });
+            apps.ForEach(it => { rt.Add(new AppEntity() { AppId = Guid.NewGuid().ToString(), AppName = it.AppName, AppRemarks = it.AppRemarks, CreatedUserId = it.CreatedUserId }); });
             DbContext.Apps.AddRange(rt);
             DbContext.SaveChanges();
             return rt;
@@ -35,10 +36,10 @@ namespace ZhuoYue.Components.Application.EntityFrameworkCore
 
         public App Delete(App app)
         {
-            var rt = DbContext.Apps.Find(app.AppId);
-            DbContext.Apps.Remove(rt);
+            var entity = DbContext.Apps.Find(app.AppId);
+            DbContext.Remove(entity);
             DbContext.SaveChanges();
-            return rt;
+            return app;
         }
 
         public IEnumerable<App> Delete(IEnumerable<App> apps)
@@ -53,13 +54,13 @@ namespace ZhuoYue.Components.Application.EntityFrameworkCore
         public IEnumerable<App> Read(SearchCriteria searchCriteria)
         {
             IQueryable<App> queryable = DbContext.Apps;
-            if (searchCriteria.AppId.Any())
+            if (searchCriteria.AppIds.Any())
             {
-                queryable = queryable.Where(it => searchCriteria.AppId.Contains(it.AppId));
+                queryable = queryable.Where(it => searchCriteria.AppIds.Contains(it.AppId));
             }
-            if (searchCriteria.AppName.Any())
+            if (searchCriteria.AppNames.Any())
             {
-                queryable = queryable.Where(it => searchCriteria.AppName.Contains(it.AppName));
+                queryable = queryable.Where(it => searchCriteria.AppNames.Contains(it.AppName));
             }
             if (searchCriteria.OrderBy.Any())
                 queryable = queryable.OrderBy(searchCriteria.OrderBy).AsQueryable();

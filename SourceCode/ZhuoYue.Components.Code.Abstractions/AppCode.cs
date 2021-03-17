@@ -9,6 +9,14 @@ namespace ZhuoYue.Components.Code.Abstractions
     {
 
         [Key]
-        public string AppId { get; set; }
+        public string AppId
+        {
+            get
+            {
+                if (Count > 0) return this[0].AppId;
+                return null;
+            }
+        }
+
     }
 }

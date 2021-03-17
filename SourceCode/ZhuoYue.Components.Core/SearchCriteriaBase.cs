@@ -7,9 +7,8 @@ namespace ZhuoYue.Components.Core
 {
     public class SearchCriteriaBase
     {
-        public int? PageSize { get; set; } = 10;
+        public int? PageSize { get; set; }
         public int PageIndex { get; set; }
-
         public Collection<ValueTuple<string, AscOrDesc?>> OrderBy { get; } = new Collection<(string, AscOrDesc?)>();
     }
 

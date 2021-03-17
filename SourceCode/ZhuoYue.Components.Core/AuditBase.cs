@@ -8,9 +8,10 @@ namespace ZhuoYue.Components.Core
     public abstract class AuditBase
     {
         [MaxLength(256)]
+        [Required]
         public string CreatedUserId { get; set; }
 
-        public DateTime CreatedTime { get; set; }
+        public DateTime CreatedTime { get; set; } = DateTime.Now;
 
         [MaxLength(256)]
         public string LastUpdatedUserId { get; set; }

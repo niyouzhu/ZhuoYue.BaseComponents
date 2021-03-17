@@ -8,20 +8,19 @@ using ZhuoYue.Components.Core;
 
 namespace ZhuoYue.Components.Code.Abstractions
 {
-    [Table("CodeCategories")]
+
     public class CodeCategory : AuditBase
     {
         [Key]
+        [MaxLength(36)]
         public string CategoryId { get; set; }
-
+        [MaxLength(256)]
         public string CategoryName { get; set; }
-
+        [MaxLength(4096)]
         public string Remarks { get; set; }
-        [ForeignKey("App")]
+        [MaxLength(36)]
         public string AppId { get; set; }
-
-        public virtual App App { get; set; }
-
-        public ICollection<CodeItem> CodeItems { get; } = new Collection<CodeItem>();
+        public virtual ICollection<CodeItem> CodeItems { get; } = new Collection<CodeItem>();
     }
+
 }

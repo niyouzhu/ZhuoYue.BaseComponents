@@ -1,0 +1,109 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20201230060507_InitialCode.cs" />
+    <Compile Remove="Migrations\20201230060507_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20201230083335_InitialCode.cs" />
+    <Compile Remove="Migrations\20201230083335_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20201230083557_InitialCode.cs" />
+    <Compile Remove="Migrations\20201230083557_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20201231014219_InitialCode.cs" />
+    <Compile Remove="Migrations\20201231014219_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20201231020955_InitialCode.cs" />
+    <Compile Remove="Migrations\20201231020955_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20201231023007_InitialCode.cs" />
+    <Compile Remove="Migrations\20201231023007_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20201231023226_InitialCode.cs" />
+    <Compile Remove="Migrations\20201231023226_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20201231024034_InitialCode.cs" />
+    <Compile Remove="Migrations\20201231024034_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20201231024436_InitialCode.cs" />
+    <Compile Remove="Migrations\20201231024436_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20201231024748_InitialCode.cs" />
+    <Compile Remove="Migrations\20201231024748_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20201231025848_CreatedUserToRequired.cs" />
+    <Compile Remove="Migrations\20201231025848_CreatedUserToRequired.Designer.cs" />
+    <Compile Remove="Migrations\20210104032305_InitialCode.cs" />
+    <Compile Remove="Migrations\20210104032305_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210104032720_InitialCode.cs" />
+    <Compile Remove="Migrations\20210104032720_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210104033243_InitialCode.cs" />
+    <Compile Remove="Migrations\20210104033243_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210104061437_InitCode.cs" />
+    <Compile Remove="Migrations\20210104061437_InitCode.Designer.cs" />
+    <Compile Remove="Migrations\20210104061535_InitialCode.cs" />
+    <Compile Remove="Migrations\20210104061535_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105053038_AddingIndexOnItemCodes.cs" />
+    <Compile Remove="Migrations\20210105053038_AddingIndexOnItemCodes.Designer.cs" />
+    <Compile Remove="Migrations\20210105053251_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105053251_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105053428_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105053428_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105053617_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105053617_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105055122_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105055122_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105055447_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105055447_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105055559_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105055559_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105061454_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105061454_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105061635_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105061635_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105061721_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105061721_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105062517_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105062517_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105062742_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105062742_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105062844_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105062844_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105070253_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105070253_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105070345_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105070345_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105070605_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105070605_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105070814_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105070814_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105070929_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105070929_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105072132_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105072132_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105072309_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105072309_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105072441_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105072441_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105072756_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105072756_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105080140_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105080140_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210105080228_InitialCode.cs" />
+    <Compile Remove="Migrations\20210105080228_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210106073458_RemoveForeignKeyOnCodeItem.cs" />
+    <Compile Remove="Migrations\20210106073458_RemoveForeignKeyOnCodeItem.Designer.cs" />
+    <Compile Remove="Migrations\20210106074440_InitialCode.cs" />
+    <Compile Remove="Migrations\20210106074440_InitialCode.Designer.cs" />
+    <Compile Remove="Migrations\20210106074757_InitialCode.cs" />
+    <Compile Remove="Migrations\20210106074757_InitialCode.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ZhuoYue.Components.Code.EntityFrameworkCore\ZhuoYue.Components.Code.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
+</Project>

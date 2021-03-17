@@ -23,7 +23,9 @@ namespace ZhuoYue.Components.Application.Cache
 
         public App Create(App app)
         {
-            return InternalProvider.Create(app);
+            var rt = InternalProvider.Create(app);
+            CacheManager.Delete(CachePrefix.App);
+            return rt;
         }
 
         public IEnumerable<App> Create(IEnumerable<App> apps)
@@ -62,13 +64,13 @@ namespace ZhuoYue.Components.Application.Cache
             }
             var queryable = all;
 
-            if (searchCriteria.AppId.Any())
+            if (searchCriteria.AppIds.Any())
             {
-                queryable = queryable.Where(it => searchCriteria.AppId.Contains(it.AppId));
+                queryable = queryable.Where(it => searchCriteria.AppIds.Contains(it.AppId));
             }
-            if (searchCriteria.AppName.Any())
+            if (searchCriteria.AppNames.Any())
             {
-                queryable = queryable.Where(it => searchCriteria.AppName.Contains(it.AppName));
+                queryable = queryable.Where(it => searchCriteria.AppNames.Contains(it.AppName));
             }
             if (searchCriteria.OrderBy.Any())
                 queryable = queryable.OrderBy(searchCriteria.OrderBy);

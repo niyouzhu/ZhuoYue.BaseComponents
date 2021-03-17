@@ -5,6 +5,7 @@ using ZhuoYue.Components.Core;
 
 namespace ZhuoYue.Components.Application.Abstractions
 {
+    [Table("App")]
     public class App : AuditBase
     {
         [Key]

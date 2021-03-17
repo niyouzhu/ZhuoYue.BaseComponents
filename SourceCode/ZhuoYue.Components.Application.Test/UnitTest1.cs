@@ -9,11 +9,14 @@ using ZhuoYue.Components.Application.EntityFrameworkCore;
 
 namespace ZhuoYue.Components.Application.Test
 {
+    [TestCaseOrderer("PriorityOrderer", "ZhuoYue.Components.Application.Test")]
     public class UnitTest1
     {
 
+
+
         private const string ConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ZhuoYue_Components_Dev; Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        [Fact]
+        [Fact, TestPriority(1)]
         public void TestCreation()
         {
             using (var dbContext = new AppDbContext(new DbContextOptionsBuilder<AppDbContext>().UseSqlServer(ConnectionString).Options))
@@ -27,7 +30,7 @@ namespace ZhuoYue.Components.Application.Test
 
         }
 
-        [Fact]
+        [Fact, TestPriority(3)]
         public void TestDeletionWithCache()
         {
             using (var dbContext = new AppDbContext(new DbContextOptionsBuilder<AppDbContext>().UseSqlServer(ConnectionString).Options))
@@ -39,13 +42,13 @@ namespace ZhuoYue.Components.Application.Test
                 Assert.True(!string.IsNullOrWhiteSpace(rt.AppId));
                 var apps = manager.ReadAll();
                 var searchCritiera = new SearchCriteria();
-                searchCritiera.AppId.Add(rt.AppId);
+                searchCritiera.AppIds.Add(rt.AppId);
                 var app2 = manager.ReadOne(searchCritiera);
                 Assert.True(rt.AppId == app2.AppId);
             }
 
         }
-        [Fact]
+        [Fact, TestPriority(2)]
         public void TestCreations()
         {
             using (var dbContext = new AppDbContext(new DbContextOptionsBuilder<AppDbContext>().UseSqlServer(ConnectionString).Options))
@@ -62,7 +65,8 @@ namespace ZhuoYue.Components.Application.Test
             }
         }
 
-        [Fact]
+        [Fact, TestPriority(3)]
+
         public void TestReadingWithoutCache()
         {
             using (var dbContext = new AppDbContext(new DbContextOptionsBuilder<AppDbContext>().UseSqlServer(ConnectionString).Options))
@@ -81,21 +85,21 @@ namespace ZhuoYue.Components.Application.Test
                 Assert.True(rt.Count() > 0);
                 var first = rt.First();
                 searchCriteria = new SearchCriteria();
-                searchCriteria.AppId.Add(first.AppId);
+                searchCriteria.AppIds.Add(first.AppId);
                 var app = manager.ReadOne(searchCriteria);
                 Assert.True(app.AppId == first.AppId);
-                searchCriteria.AppId.Add(rt.ElementAt(1).AppId);
+                searchCriteria.AppIds.Add(rt.ElementAt(1).AppId);
                 var apps = manager.Read(searchCriteria);
                 Assert.True(apps.Count() == 2);
-                searchCriteria.AppId.Clear();
-                searchCriteria.AppName.Add(first.AppName);
-                searchCriteria.AppName.Add(rt.ElementAt(1).AppName);
+                searchCriteria.AppIds.Clear();
+                searchCriteria.AppNames.Add(first.AppName);
+                searchCriteria.AppNames.Add(rt.ElementAt(1).AppName);
                 apps = manager.Read(searchCriteria);
                 Assert.True(apps.Count() > 0);
 
             }
         }
-        [Fact]
+        [Fact, TestPriority(3)]
         public void TestReadingWithCache()
         {
             using (var dbContext = new AppDbContext(new DbContextOptionsBuilder<AppDbContext>().UseSqlServer(ConnectionString).Options))
@@ -114,15 +118,15 @@ namespace ZhuoYue.Components.Application.Test
                 Assert.True(rt.Count() > 0);
                 var first = rt.First();
                 searchCriteria = new SearchCriteria();
-                searchCriteria.AppId.Add(first.AppId);
+                searchCriteria.AppIds.Add(first.AppId);
                 var app = manager.ReadOne(searchCriteria);
                 Assert.True(app.AppId == first.AppId);
-                searchCriteria.AppId.Add(rt.ElementAt(1).AppId);
+                searchCriteria.AppIds.Add(rt.ElementAt(1).AppId);
                 var apps = manager.Read(searchCriteria);
                 Assert.True(apps.Count() == 2);
-                searchCriteria.AppId.Clear();
-                searchCriteria.AppName.Add(first.AppName);
-                searchCriteria.AppName.Add(rt.ElementAt(1).AppName);
+                searchCriteria.AppIds.Clear();
+                searchCriteria.AppNames.Add(first.AppName);
+                searchCriteria.AppNames.Add(rt.ElementAt(1).AppName);
                 apps = manager.Read(searchCriteria);
                 Assert.True(apps.Count() >= 2);
             }

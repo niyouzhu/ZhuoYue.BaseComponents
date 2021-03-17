@@ -9,8 +9,17 @@ namespace ZhuoYue.Components.Code.EntityFrameworkCore
 {
     public class CodeDbContext : DbContext
     {
-        public DbSet<CodeCategoryEntity> CodeCategories { get; set; }
-        public DbSet<CodeItemEntity> CodeItems { get; set; }
+        public DbSet<CodeCategory> CodeCategories { get; set; }
+        public DbSet<CodeItem> CodeItems { get; set; }
 
+        public CodeDbContext(DbContextOptions<CodeDbContext> options) : base(options)
+        {
+
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CodeItem>().HasIndex(it => it.CodeCategoryId);
+        }
     }
 }

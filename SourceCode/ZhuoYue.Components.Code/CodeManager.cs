@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using ZhuoYue.Components.Code.Abstractions;
 
@@ -18,22 +19,28 @@ namespace ZhuoYue.Components.Code
 
         public AppCode ReadAll(string appId)
         {
-            throw new NotImplementedException();
+            var searchCriteria = new SearchCriteria();
+            searchCriteria.AppIds.Add(appId);
+            searchCriteria.PageSize = null;
+            var result = ReadCodeCategory(searchCriteria);
+            var rt = new AppCode();
+            rt.AddRange(result);
+            return rt;
         }
 
         public CodeCategory CreateCodeCategory(CodeCategory codeCategory)
         {
-            throw new NotImplementedException();
+            return CodeProvider.CreateCodeCategory(codeCategory);
         }
 
         public IEnumerable<CodeCategory> CreateCodeCategory(IEnumerable<CodeCategory> codeCategories)
         {
-            throw new NotImplementedException();
+            return CodeProvider.CreateCodeCategory(codeCategories);
         }
 
-        public IEnumerable<CodeCategory> ReadCodeCategory(CodeCategorySearchCriteria searchCriteria)
+        public IEnumerable<CodeCategory> ReadCodeCategory(SearchCriteria searchCriteria)
         {
-            throw new NotImplementedException();
+            return CodeProvider.ReadCodeCategory(searchCriteria);
         }
 
         public CodeCategory UpdateCodeCategory(CodeCategory codeCategory)
@@ -53,7 +60,7 @@ namespace ZhuoYue.Components.Code
 
         public IEnumerable<CodeCategory> DeleteCodeCategory(IEnumerable<CodeCategory> codeCategories)
         {
-            throw new NotImplementedException();
+            return CodeProvider.DeleteCodeCategory(codeCategories);
         }
 
         public CodeItem CreateCodeItem(CodeItem codeItem)
@@ -66,10 +73,6 @@ namespace ZhuoYue.Components.Code
             throw new NotImplementedException();
         }
 
-        public IEnumerable<CodeItem> ReadCodeItem(CodeItemSearchCriteria codeItemSearchCriteria)
-        {
-            throw new NotImplementedException();
-        }
 
         public CodeItem UpdateCodeItem(CodeItem codeItem)
         {
@@ -89,6 +92,21 @@ namespace ZhuoYue.Components.Code
         public IEnumerable<CodeItem> DeleteCodeItem(IEnumerable<CodeItem> codeItems)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<AppCode> ReadAll()
+        {
+            var result = ReadCodeCategory(new SearchCriteria() { PageSize = null });
+            var appIds = result.Select(it => it.AppId).Distinct();
+            var rt = new List<AppCode>(appIds.Count());
+            appIds.ForEach(it =>
+            {
+                var categories = result.Where(_ => _.AppId == it);
+                var appCode = new AppCode();
+                appCode.AddRange(categories);
+                rt.Add(appCode);
+            });
+            return rt;
         }
     }
 }

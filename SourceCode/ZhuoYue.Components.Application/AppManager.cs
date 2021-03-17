@@ -54,11 +54,11 @@ namespace ZhuoYue.Components.Application
         public App ReadOne(SearchCriteria searchCriteria)
         {
             var rt = Read(searchCriteria);
-            if (rt.Count() > 1)
+            if (rt.Count() != 1)
             {
                 throw new BusinessException($"There is more than 1 result based on the search criteria. ");
             }
-            return rt.First();
+            return rt.FirstOrDefault();
         }
 
         public IEnumerable<App> ReadAll()
